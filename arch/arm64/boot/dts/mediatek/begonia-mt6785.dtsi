@@ -4,6 +4,7 @@ this file is only for attribution of begonia
 #include "xiaomi-mt6785-common.dtsi"
 #include "novatek-nt36xxx-spi.dtsi"
 #include "cust_mt6785_camera.dtsi"
+
 /******GOODIX, FPC FINGERPRINT start ******/
 &spi0 {
         #address-cells = <1>;
@@ -23,22 +24,11 @@ this file is only for attribution of begonia
         pinctrl-1 = <&fingerprint_reset_high>;
         pinctrl-2 = <&fingerprint_reset_low>;
 
-        fpc,gpio_irq = <&pio 4 0>;
+	fpc,gpio_irq = <&pio 4 0>;
         interrupt-parent = <&pio>;
 	interrupts = <4 IRQ_TYPE_EDGE_RISING 4 0>;
 	debounce = <4 0>;
         status = "okay";
-};
-
-&spi1 {
-	#address-cells = <1>;
-	#size-cells = <0>;
-	p61@31 {
-		compatible = "nxp,p61";
-		reg = <0>;
-		spi-max-frequency = <8000000>;
-		status = "okay";
-	};
 };
 
 &pio {
@@ -83,6 +73,17 @@ this file is only for attribution of begonia
 		reg = <0>;
 		status = "ok";
 		spi-max-frequency = <10000000>;  //10M
+	};
+};
+
+&spi1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	p61@31 {
+		compatible = "nxp,p61";
+		reg = <0>;
+		spi-max-frequency = <8000000>;
+		status = "okay";
 	};
 };
 
@@ -194,9 +195,10 @@ this file is only for attribution of begonia
 		= <3000000 2800000 2600000 2400000 2200000 2000000 1800000
 		1600000 1600000 1400000 1200000 1100000 1000000 900000
 		752500 525000>;
-	mi,cycle-count-cv
-		= <0 99 4390000 100 199 4370000 200 299 4350000 300
-		2999 4330000>;
+	mi,cycle-count-cv = <0	99	4390000
+				100	199	4370000
+				200	299	4350000
+				300	2999	4330000>;
 };
 
 &usb0phy {
@@ -206,4 +208,8 @@ this file is only for attribution of begonia
 		u2_term_ref = <4>;
 		u2_enhance  = <1>;
 	};
+};
+
+&thermal_message {
+	board-sensor = "VIRTUAL-SENSOR";
 };
